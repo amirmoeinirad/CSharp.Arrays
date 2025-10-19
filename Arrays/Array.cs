@@ -3,6 +3,8 @@
 // May 31, 2025
 
 // Main Concept: Arrays in C#.NET, Upcasting and Downcasting
+// Upcasting: Converting a derived class object to a base class object.
+// Downcasting: Converting a base class object to a derived class object.
 
 
 using System;
@@ -13,6 +15,7 @@ namespace Arrays
     internal class Father
     {
         // Field
+        // Making it protected to allow access in derived classes
         protected string fatherName;
 
 
@@ -30,7 +33,8 @@ namespace Arrays
         }
 
 
-        // Property to access the name
+        // Property to access the name field
+        // The property is defined in the traditional way.
         public string Name
         {
             get
@@ -46,6 +50,7 @@ namespace Arrays
 
 
 
+    // The 'Child' class derives or inherits from the 'Father' class
     internal class Child : Father
     {
         // Field
@@ -59,14 +64,14 @@ namespace Arrays
         }
 
 
-        // Custom constructor that calls the base class constructor        
+        // Custom constructor that calls the custom constructor of the base class
         public Child(string cName, string fName) : base(fName)
         {
             childName = cName;
         }
 
 
-        // Property to access the name
+        // Property to access the name field
         public new string Name
         {
             get
@@ -181,17 +186,16 @@ namespace Arrays
             Console.WriteLine();
 
 
-            // (1) Upcasting (implicit conversion).
+            // (1) Upcasting
             Father FatherObject1 = new Father();
             Child ChildObject1 = new Child("Arman", "Mahmood");
             Console.WriteLine("FatherObject1's Name: {0}", FatherObject1.Name);
             Console.WriteLine("ChildObject1's Name: {0}", ChildObject1.Name);
 
-            // The FatherObject2's Name is the same as ChildObject2's Father Name.
+            // The FatherObject1's Name will be replaced by the ChildObject1's Father Name.
             FatherObject1 = ChildObject1;
             Console.WriteLine("After Upcasting...");
-            Console.WriteLine("FatherObject1's Name: {0}", FatherObject1.Name);
-            Console.WriteLine("ChildObject1's Name: {0}\n", ChildObject1.Name);
+            Console.WriteLine("FatherObject1's Name: {0}\n", FatherObject1.Name);            
 
 
             /*------------------------------------------------------------*/
@@ -200,7 +204,7 @@ namespace Arrays
             // DOWNCASTING
 
 
-            // (2) Downcasting (explicit conversion)
+            // (2) Downcasting
             Father FatherObject2 = new Father("Mahdi");
             Child ChildObject2 = new Child("Hassan", "Hossein");
             Console.WriteLine("FatherObject2's Name: {0}", FatherObject2.Name);
@@ -209,7 +213,7 @@ namespace Arrays
             // This will not compile because ChildObject2 is not a Father.
             // ChildObject2 = (Child)FatherObject2;
             // But
-            // Child part will be added to Father part. Now, FatherObject3 also contains ChildObject3's properties.
+            // Child part will be added to Father part. Now, FatherObject2 also contains ChildObject2's properties.
             FatherObject2 = ChildObject2;
             // Now, the following Downcasting is possible.
             ChildObject2 = (Child)FatherObject2;
